@@ -29,8 +29,8 @@ app.get('/', async (req, res) => {
 
     await page.screenshot({ path: 'chorme.png', fullPage: true });
     await browser.close();
-    arrayBase64File['chrome' + env.toUpperCase()] = toBase64Thing(__dirname + '\\chorme.png');
-
+    // arrayBase64File['chrome' + env.toUpperCase()] = toBase64Thing(__dirname + '/chorme.png'); //For MAcos or Linux
+    arrayBase64File['chrome' + env.toUpperCase()] = toBase64Thing(__dirname + '\\chorme.png'); //For Window
   } catch (e) {
     console.log(e)
   }
@@ -47,12 +47,13 @@ app.get('/', async (req, res) => {
     await pageFirefox.screenshot({ path: 'firefox.png', fullPage: true });
 
     await browserFirefox.close();
-    let base64FireFox = toBase64Thing(__dirname + '\\firefox.png')
-    arrayBase64File['firefox' + env.toUpperCase()] = base64FireFox
+    // let base64FireFox = toBase64Thing(__dirname + '/firefox.png') For Macos or Linux;
+    let base64FireFox = toBase64Thing(__dirname + '\\firefox.png') //for window
+    arrayBase64File['firefox'+ env.toUpperCase()] = base64FireFox
   } catch (e) {
     console.log(e)
   }
-  res.sendFile(arrayBase64File);
+  res.send(arrayBase64File);
 })
 
 app.listen(3000);
