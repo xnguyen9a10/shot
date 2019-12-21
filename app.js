@@ -4,8 +4,10 @@ const cors = require('cors');
 const app = express();
 const puppeteer = require('puppeteer');
 const pptrFirefox = require('puppeteer-firefox');
-const env = 'mac';
+
 const fs = require('fs');
+//COME HERE
+const env = 'mac';
 
 function toBase64Thing(file) {
   const file64 = fs.readFileSync(file);
@@ -27,7 +29,7 @@ app.get('/', async (req, res) => {
 
     await page.screenshot({ path: 'chorme.png', fullPage: true });
     await browser.close();
-    arrayBase64File['chrome'] = toBase64Thing(__dirname + '\\chorme.png');
+    arrayBase64File['chrome' + env.toUpperCase()] = toBase64Thing(__dirname + '\\chorme.png');
 
   } catch (e) {
     console.log(e)
@@ -45,8 +47,8 @@ app.get('/', async (req, res) => {
     await pageFirefox.screenshot({ path: 'firefox.png', fullPage: true });
 
     await browserFirefox.close();
-    let base64FireFox = toBase64Thing(__dirname + '\\firefox.png') 
-    arrayBase64File['firefox'] = base64FireFox
+    let base64FireFox = toBase64Thing(__dirname + '\\firefox.png')
+    arrayBase64File['firefox' + env.toUpperCase()] = base64FireFox
   } catch (e) {
     console.log(e)
   }
