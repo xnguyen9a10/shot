@@ -4,7 +4,11 @@ const cors = require('cors');
 const app = express();
 const puppeteer = require('puppeteer');
 const pptrFirefox = require('puppeteer-firefox');
-
+const bodyParser = require('body-parser');
+app.use(bodyParser.urlencoded({
+  extended: true
+}));
+app.use(bodyParser.json())
 const fs = require('fs');
 //COME HERE
 const env = 'mac';
@@ -16,12 +20,13 @@ function toBase64Thing(file) {
 
 app.use(logger("dev"));
 
-app.get('/', async (req, res) => {
+app.get('/go', async (req, res) => {
+  const url = req.query.url;
   const arrayBase64File = {};
   try {
     const browser = await puppeteer.launch();
     const page = await browser.newPage();
-    await page.goto('https://youtube.com');
+    await page.goto(url);
     await page.setViewport({
       width: 1920,
       height: 1080
@@ -38,7 +43,7 @@ app.get('/', async (req, res) => {
   try {
     const browserFirefox = await pptrFirefox.launch();
     const pageFirefox = await browserFirefox.newPage();
-    await pageFirefox.goto('https://24h.com.vn');
+    await pageFirefox.goto(url);
     await pageFirefox.setViewport({
       width: 1920,
       height: 1080
