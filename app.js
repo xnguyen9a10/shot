@@ -15,7 +15,7 @@ app.use(bodyParser.urlencoded({
 app.use(bodyParser.json())
 const fs = require('fs');
 //COME HERE
-const env = 'window';
+const env = 'MACOS';
 
 function toBase64Thing(file) {
   const file64 = fs.readFileSync(file);
@@ -42,7 +42,7 @@ app.get('/go', async (req, res) => {
         await page.screenshot({ path: `${env}-chorme.png`, fullPage: true });
         await browser.close();
         // arrayBase64File['chrome' + env.toUpperCase()] = toBase64Thing(__dirname + '/chorme.png'); //For MAcos or Linux
-        arrayBase64File['chrome' + env.toUpperCase()] = toBase64Thing(__dirname + `\\${env}-chorme.png`); //For Window
+        arrayBase64File['chrome' + env.toUpperCase()] = toBase64Thing(__dirname + `/${env}-chorme.png`); //For Window
         resolve();
       } catch (e) {
         reject();
@@ -64,7 +64,7 @@ app.get('/go', async (req, res) => {
 
         await browserFirefox.close();
         // let base64FireFox = toBase64Thing(__dirname + '/firefox.png') For Macos or Linux;
-        let base64FireFox = toBase64Thing(__dirname + `\\${env}-firefox.png`) //for window
+        let base64FireFox = toBase64Thing(__dirname + `/${env}-firefox.png`) //for window
         arrayBase64File['firefox' + env.toUpperCase()] = base64FireFox;
         resolve();
       } catch (e) {
@@ -79,7 +79,7 @@ app.get('/go', async (req, res) => {
         await open(url);
         child_process.execSync("sleep 3");
         screenshot({ filename: `${env}-safary.png` }).then((imgPath) => {
-          let base64Safari = toBase64Thing(__dirname + `\\${env}-safary.png`) //for window
+          let base64Safari = toBase64Thing(__dirname + `/${env}-default.png`) //for window
           arrayBase64File['safary' + env.toUpperCase()] = base64Safari;
         });
         resolve();
