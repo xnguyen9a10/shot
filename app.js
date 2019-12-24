@@ -78,7 +78,7 @@ app.get('/go', async (req, res) => {
       try {
         await open(url);
         child_process.execSync("sleep 3");
-        screenshot({ filename: `${env}-safary.png` }).then((imgPath) => {
+        screenshot({ filename: `${env}-default.png` }).then((imgPath) => {
           let base64Safari = toBase64Thing(__dirname + `/${env}-default.png`) //for window
           arrayBase64File['safary' + env.toUpperCase()] = base64Safari;
         });
